@@ -6,6 +6,8 @@ import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.alibaba.nacos.spring.context.annotation.EnableNacos;
+import com.alibaba.nacos.spring.context.annotation.config.EnableNacosConfig;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.alibaba.nacos.spring.context.annotation.discovery.EnableNacosDiscovery;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +24,8 @@ import java.util.List;
  */
 @RestController
 @SpringBootApplication
-@NacosPropertySource( dataId = "example.properties", autoRefreshed = true)
-@EnableNacosDiscovery(globalProperties = @NacosProperties(serverAddr = ""))
+@NacosPropertySource( dataId = "nacos-sb-prod.properties", autoRefreshed = true)
+@EnableNacosConfig(globalProperties = @NacosProperties)
 public class NacosDemoApplication {
 
     public static void main(String[] args) {
@@ -39,17 +41,19 @@ public class NacosDemoApplication {
         return str;
     }
 
-    @NacosInjected
-    private NamingService namingService;
 
-    @Value("${server.port}")
-    private int serverPort;
-
-    @Value("${spring.application.name}")
-    private String applicationName;
-
-    @GetMapping(value = "/gettt")
-    public List<Instance> getty(@RequestParam String serviceName) throws NacosException {
-        return namingService.getAllInstances(serviceName);
-    }
 }
+
+//    @NacosInjected
+//    private NamingService namingService;
+//
+//    @Value("${server.port}")
+//    private int serverPort;
+//
+//    @Value("${spring.application.name}")
+//    private String applicationName;
+//
+//    @GetMapping(value = "/gettt")
+//    public List<Instance> getty(@RequestParam String serviceName) throws NacosException {
+//        return namingService.getAllInstances(serviceName);
+//    }
